@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LORA | منتجات العناية بالبشرة والشعر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تضمين الخطوط والأيقونات الأساسية -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="css.css">
+      <!-- ✅ إعدادات Tailwind لتحديد الألوان والخطوط (مهم لتعريف الألوان المخصصة) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-color': '#A0522D', // لون أساسي (طيني/بني عميق)
+                        'secondary-color': '#D4AF37', // لون ثانوي (ذهبي)
+                        'accent-color': '#B8860B', // لون السعر/التركيز
+                        'nav-bg': '#FFFBF5', // لون خلفية شريط التنقل
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+
+    <!-- ✅ الأنماط المخصصة (لتعويض ملف style.css المفقود) -->
+  
+</head>
+
+
+<body>
+    <!-- ---------------------------------- -->
+    <!-- ✅ شريط التنقل (Navbar) - تم تحسينه وتثبيته -->
+    <!-- ---------------------------------- -->
+    <nav id="main-navbar" class="fixed top-0 left-0 w-full z-50 bg-nav-bg shadow-soft transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- الشعار أو اسم المتجر - تم إضافة صورة هنا -->
+            <a href="#" class="flex items-center space-x-2 space-x-reverse text-3xl font-bold text-accent-color hover:text-primary-color transition-colors duration-300">
+                <!-- صورة شعار المنتج (Placeholder) -->
+                <img src="./images/logo.png" alt="شعار لورا" class="w-12 h-12 rounded-full border-2 border-primary-color object-cover shadow-md">
+                <span>LORA</span>
+            </a>
+            
+                    <!-- أيقونات التواصل الاجتماعي في شريط التنقل -->
+                    <a href="https://www.instagram.com/lorabrand2?igsh=MWFrZGh6YXk3cDNiZQ==&utm_source=ig_contact_invite‎" target="_blank" class="nav-social-icon nav-social-ig hover:bg-gray-100" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/17JzffcdDZ/" target="_blank" class="nav-social-icon nav-social-fb hover:bg-gray-100" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@lora...brand?_r=1&_t=ZS-91fqbrTP9sn" target="_blank" class="text-tiktok-color hover:text-accent-color transition duration-300">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+            <!-- قائمة التنقل الرئيسية -->
+            <ul class="hidden md:flex space-x-8 space-x-reverse text-lg">
+                <li><a href="#hero-section" class="text-text-dark hover:text-accent-color border-b-2 border-transparent hover:border-accent-color pb-1 transition-all duration-300">الرئيسية</a></li>
+                <li><a href="#products-section" class="text-text-dark hover:text-accent-color border-b-2 border-transparent hover:border-accent-color pb-1 transition-all duration-300">المنتجات</a></li>
+                <li><a href="#testimonials" class="text-text-dark hover:text-accent-color border-b-2 border-transparent hover:border-accent-color pb-1 transition-all duration-300">عنّا</a></li>
+                <li><a href="#contact" class="text-text-dark hover:text-accent-color border-b-2 border-transparent hover:border-accent-color pb-1 transition-all duration-300">تواصل معنا</a></li>
+            </ul>
+
+             <!-- أيقونات الإجراءات (سلة المشتريات والمفضلة وتسجيل الدخول) -->
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <!-- أيقونة سلة المشتريات - تم إضافة دالة showCartModal() -->
+                <button aria-label="سلة المشتريات" class="relative text-2xl text-text-dark hover:text-accent-color transition-colors duration-300 p-2 rounded-full hover:bg-background-light" onclick="showCartModal()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <!-- عداد سلة المشتريات (يمكن تحديثه بـ JS) -->
+                    <span id="cart-count" class="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-primary-color text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-nav-bg">0</span>
+                </button>
+
+                <!-- أيقونة المفضلة -->
+                <button aria-label="المفضلة" class="relative text-2xl text-text-dark hover:text-accent-color transition-colors duration-300 p-2 rounded-full hover:bg-background-light" onclick="showFavoritesModal()">
+                    <i class="fas fa-heart"></i>
+                    <!-- عداد المفضلة (سيتم تحديثه بواسطة JS) -->
+                    <span id="favorites-count" class="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-nav-bg">0</span>
+                </button>
+                
+                <!-- أيقونة تسجيل الدخول (Login) -->
+                <button aria-label="تسجيل الدخول" class="text-2xl text-text-dark hover:text-accent-color transition-colors duration-300 p-2 rounded-full hover:bg-background-light" onclick="showLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                </button>
+
+                <!-- أيقونة إنشاء حساب (Register/Profile) -->
+                <button aria-label="إنشاء حساب" class="text-2xl text-text-dark hover:text-accent-color transition-colors duration-300 p-2 rounded-full hover:bg-background-light" onclick="showRegisterModal()">
+                    <i class="fas fa-user-plus"></i>
+                </button>
+
+                <!-- زر قائمة الجوال (Hamburger Icon) -->
+                <button class="md:hidden text-2xl text-text-dark hover:text-accent-color" aria-label="فتح قائمة التنقل" id="menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- قائمة الجوال المنبثقة -->
+        <div id="mobile-menu" class="hidden md:hidden bg-nav-bg w-full absolute top-full left-0 shadow-soft">
+            <ul class="flex flex-col space-y-2 p-4 text-center text-lg">
+                <li><a href="#hero" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300">الرئيسية</a></li>
+                <li><a href="#products" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300">المنتجات</a></li>
+                <li><a href="#about" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300">عنّا</a></li>
+                <li><a href="#contact" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300">تواصل معنا</a></li>
+                <!-- إضافة روابط التسجيل/الدخول لقائمة الجوال -->
+                <li><a href="#" onclick="showCartModal()" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300"><i class="fas fa-shopping-bag ml-2"></i> سلة المشتريات</a></li>
+                <li><a href="#" onclick="showLoginModal()" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300"><i class="fas fa-sign-in-alt ml-2"></i> تسجيل الدخول</a></li>
+                <li><a href="#" onclick="showRegisterModal()" class="block p-2 text-text-dark hover:bg-background-light rounded-lg transition-colors duration-300"><i class="fas fa-user-plus ml-2"></i> إنشاء حساب</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- ✅ فاصل لتأمين المسافة أسفل شريط التنقل الثابت -->
+    <div id="navbar-spacer" class="h-[76px]"></div>
+
+
+
+   
+    <!-- ✅ Cover Section (Hero) -->
+    
+    <section class="cover-container" id="hero-section">
+        <div class="cover-box">
+            <img src="./images/logo.png" alt="صورة غلاف المتجر" class="animated-element" data-delay="0.2s">
+            <div class="cover-text">
+               
+                <h2 class="animated-element" data-delay="0.6s">LORA Products:</h2>
+                <p class="animated-element" data-delay="0.8s">Made with natural and completely safe ingredients.</p>
+                <p class="animated-element" data-delay="1.0s">Treats the root problem: hair loss, frizz, dryness, and dullness.</p>
+                <p class="animated-element" data-delay="1.2s">A complete set that eliminates the need for any other products.</p>
+            </div>
+        </div>
+    </section>
+    <!-- ✅ حاوية المحتوى الديناميكي (SPA) - يتم تحديثها بواسطة JavaScript -->
+    <main id="app-content" class="min-h-screen py-8"></main>
+         <!-- قسم آراء العملاء -->
+<section id="testimonials" class="py-16 md:py-24 bg-background-light">
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title animated-element">ماذا يقول عملاؤنا؟</h2>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 animated-element" style="transition-delay: 0.6s;">
+                <div class="testimonial-card">
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-700 italic flex-grow">"أفضل كريم استخدمته على الإطلاق! لاحظت فرقاً كبيراً في نعومة بشرتي وقوة شعري من أول أسبوعين. أنصح به بشدة."</p>
+                    <p class="reviewer-name">الاء اشرف , القاهرة </p>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic flex-grow">"منتجات لورا غيرت روتيني اليومي. الرائحة مريحة والامتصاص سريع، والأهم هو النتائج الفعالة."</p>
+                    <p class="reviewer-name">سلمى مصطفى , القاهرة </p>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-700 italic flex-grow">"كانت بشرتي جافة جداً، لكن هذا الكريم أعاد لها الحياة والنضارة. شكراً LORA على هذه الجودة!"</p>
+                    <p class="reviewer-name">ايمان عبد المنعم , القاهرة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+ <!-- ✅ طلب عبر واتساب -->
+    <section id="contact" class="whatsapp-order animated-element" data-delay="0.1s">
+        <h2> اطلبي مباشرة عبر واتساب</h2>
+        <a href="https://wa.me/201098575720?text=أرغب%20في%20طلب%20منتج%20لورا" target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> اطلب عبر واتساب
+        </a>
+        <!-- ✅ نموذج طلب عبر Google Forms -->
+        <section class="order-form animated-element" data-delay="0.3s">
+            <h2>اطلبي الآن عبر النموذج</h2>
+            <iframe src="https://forms.gle/oerfkiKXMhiNeb8x8" width="100%" height="600" frameborder="0" marginheight="0"
+                marginwidth="0">يتم تحميل النموذج...</iframe>
+        </section>
+    </section>
+
+    <!-- ✅ Footer أو روابط تحتية -->
+    <footer>
+        <p>&copy; 2024 LORA Skin & Hair Products. جميع الحقوق محفوظة.</p>
+    </footer>
+<!-- ---------------------------------- -->
+    <!-- ✅ 1. Modal لسلة المشتريات (Cart) -->
+    <!-- ---------------------------------- -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="cart-content">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-3xl font-bold text-primary-color flex items-center">
+                    <i class="fas fa-shopping-bag ml-3 text-accent-color"></i> سلة المشتريات
+                </h3>
+                <button aria-label="إغلاق" onclick="hideCartModal()" class="text-gray-500 hover:text-red-500 text-3xl transition-colors duration-300">&times;</button>
+            </div>
+            
+            <div id="cart-items-list" class="space-y-4">
+                <!-- المنتجات المضافة ستضاف هنا بواسطة JavaScript -->
+                <p id="empty-cart" class="text-center text-gray-500 text-lg">سلة المشتريات فارغة.</p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-dashed">
+                <div class="flex justify-between items-center text-2xl font-bold text-text-dark mb-4">
+                    <span>الإجمالي:</span>
+                    <span id="cart-total" class="text-accent-color">0.00 ج.م</span>
+                </div>
+               <button onclick="redirectToWhatsapp()" class="w-full bg-secondary-color text-white text-xl font-bold py-3 rounded-lg hover:bg-accent-color transition duration-300 transform hover:-translate-y-0.5 shadow-lg">
+                    إتمام الطلب
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ---------------------------------- -->
+    <!-- ✅ 2. Modal لعرض المنتجات المفضلة -->
+    <!-- ---------------------------------- -->
+    <div id="favorites-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="favorites-content">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-primary-color">المنتجات المفضلة</h3>
+                <button aria-label="إغلاق" onclick="hideFavoritesModal()" class="text-gray-500 hover:text-red-500 text-3xl transition-colors duration-300">&times;</button>
+            </div>
+            <div id="favorites-list" class="space-y-4">
+                <!-- المنتجات المفضلة ستضاف هنا بواسطة JavaScript -->
+                <p id="empty-favorites" class="text-center text-gray-500 text-lg">لم تقم بإضافة أي منتج للمفضلة بعد.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ---------------------------------- -->
+    <!-- ✅ 3. Modal لتسجيل الدخول (Login) -->
+    <!-- ---------------------------------- -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-xl max-w-sm w-full p-8 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="login-content">
+            <div class="flex justify-between items-center border-b pb-3 mb-6">
+                <h3 class="text-3xl font-bold text-primary-color flex items-center">
+                    <i class="fas fa-sign-in-alt ml-3 text-accent-color"></i> تسجيل الدخول
+                </h3>
+                <button aria-label="إغلاق" onclick="hideLoginModal()" class="text-gray-500 hover:text-red-500 text-3xl transition-colors duration-300">&times;</button>
+            </div>
+            
+            <form class="space-y-5">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">البريد الإلكتروني</label>
+                    <input type="email" id="login-email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-accent-color focus:border-accent-color transition duration-300 text-lg">
+                </div>
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">كلمة المرور</label>
+                    <input type="password" id="login-password" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-accent-color focus:border-accent-color transition duration-300 text-lg">
+                </div>
+                <button type="submit" class="w-full bg-primary-color text-white text-xl font-bold py-3 rounded-lg hover:bg-accent-color transition duration-300 transform hover:-translate-y-0.5 shadow-lg">
+                    دخول
+                </button>
+            </form>
+            <p class="text-center text-sm mt-4 text-gray-600">
+                ليس لديك حساب؟ 
+                <a href="#" onclick="hideLoginModal(); showRegisterModal();" class="text-accent-color hover:underline font-semibold">أنشئ حساباً جديداً</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ---------------------------------- -->
+    <!-- ✅ 4. Modal لإنشاء حساب (Register) -->
+    <!-- ---------------------------------- -->
+    <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-xl max-w-sm w-full p-8 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="register-content">
+            <div class="flex justify-between items-center border-b pb-3 mb-6">
+                <h3 class="text-3xl font-bold text-primary-color flex items-center">
+                    <i class="fas fa-user-plus ml-3 text-accent-color"></i> إنشاء حساب
+                </h3>
+                <button aria-label="إغلاق" onclick="hideRegisterModal()" class="text-gray-500 hover:text-red-500 text-3xl transition-colors duration-300">&times;</button>
+            </div>
+            
+            <form class="space-y-5">
+                 <div>
+                    <label for="register-name" class="block text-sm font-medium text-gray-700 mb-1">الاسم الكامل</label>
+                    <input type="text" id="register-name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-accent-color focus:border-accent-color transition duration-300 text-lg">
+                </div>
+                <div>
+                    <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">البريد الإلكتروني</label>
+                    <input type="email" id="register-email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-accent-color focus:border-accent-color transition duration-300 text-lg">
+                </div>
+                <div>
+                    <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">كلمة المرور</label>
+                    <input type="password" id="register-password" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-accent-color focus:border-accent-color transition duration-300 text-lg">
+                </div>
+                <button type="submit" class="w-full bg-primary-color text-white text-xl font-bold py-3 rounded-lg hover:bg-accent-color transition duration-300 transform hover:-translate-y-0.5 shadow-lg">
+                    تسجيل
+                </button>
+            </form>
+            <p class="text-center text-sm mt-4 text-gray-600">
+                لديك حساب بالفعل؟ 
+                <a href="#" onclick="hideRegisterModal(); showLoginModal();" class="text-accent-color hover:underline font-semibold">سجل دخولك الآن</a>
+            </p>
+        </div>
+    </div>
+
+  <!-- ------------------------------------------------ -->
+    <!-- ✅ 5. Modal لعرض تفاصيل المنتج (Product Detail) -->
+    <!-- ------------------------------------------------ -->
+    <div id="product-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[110] hidden items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="product-detail-content">
+            <!-- المحتوى سيتم إدراجه بواسطة JavaScript هنا -->
+        </div>
+    </div>
+
+
+    <!-- ---------------------------------- -->
+    <!-- ✅ ملفات Scripts (بدون Firebase) -->
+    <!-- ---------------------------------- -->
+<script type="text/javascript">
+        // ----------------------------------
+        // ✅ البيانات الثابتة للمنتجات (تم تحديثها وفقاً لقائمة الأسعار)
+        // ----------------------------------
+        const productsData = [
+            // --- HAIR CARE (العناية بالشعر) ---
+            { id: 'p1', title: 'شامبو الكافيار والبروتين والشيا', price: 220.00, desc: 'تركيبة فاخرة لترميم وتغذية الشعر التالف والجاف بعمق.', longDesc: 'شامبو مركز غني بمستخلصات الكافيار والبروتين وزبدة الشيا. يعمل على إعادة بناء ألياف الشعر، تعزيز مرونته، والحد من التقصف. مناسب للشعر الذي خضع للعلاجات الكيميائية.', category: 'شعر', img: './images/شامبو الكافياروالارز.jpg', isFavorite: false },
+            { id: 'p2', title: 'سيروم الحشيش لتطويل وتكثيف الشعر', price: 250.00, desc: 'تركيبة قوية من مستخلصات الحشيش الطبيعية لتحفيز نمو الشعر وملء الفراغات.', longDesc: 'سيروم علاجي يغذي فروة الرأس بعمق وينشط البصيلات الخاملة، مما يزيد من معدل نمو الشعر وكثافته. يقلل التساقط ويمنح الشعر ملمساً ناعماً وصحياً.', category: 'شعر', img: './images/سيرم الحشيش.jpg', isFavorite: false },
+            { id: 'p3', title: 'سيروم الارجان لترطيب وتغذية الشعر', price: 250.00, desc: 'زيت الأرغان المغربي النقي لترطيب عميق وحماية من التلف الحراري.', longDesc: 'زيت أرغان عضوي 100%، غني بفيتامين E ومضادات الأكسدة. يعالج جفاف الشعر ويمنحه لمعاناً فورياً دون ترك ملمس دهني، كما يحمي الأطراف المتقصفة.', category: 'شعر', img: './images/سيرم الارجان للشعر.jpg', isFavorite: false },
+            { id: 'p4', title: 'كريم النخاع والبروتين والشيا والارجان', price: 120.00, desc: 'كريم معالج ومغذي للشعر الجاف والمتضرر، يقلل من التجعد والنفشة.', longDesc: 'تركيبة غنية تدمج قوة النخاع والبروتين وزبدة الشيا وزيت الأرغان. يعمل كماسك عميق أو كريم تسريح يومي لترطيب الشعر بعمق وإعادة بناء بنيته الداخلية.', category: 'شعر', img: './images/كريم النخاع والبروتين والشيا والارجان.jpg', isFavorite: false },
+            { id: 'p5', title: 'هير ماسك الشيا والارجان', price: 80.00, desc: 'ماسك ترطيب مكثف يعيد الحيوية والنعومة للشعر المجهد والمُعالج.', longDesc: 'ماسك أسبوعي بزبدة الشيا وزيت الأرغان. يغذي ويرطب الشعر بعمق، ويجعل عملية فك التشابك أسهل. مناسب لجميع أنواع الشعر خاصة الكيرلي والجاف.', category: 'شعر', img: './images/هير ماسك الشيا والارجان.jpg', isFavorite: false },
+            { id: 'p6', title: 'مجموعة الزيوت الهندية الاصلية للشعر', price: 150.00, desc: 'مزيج زيوت تقليدي لتحفيز النمو وزيادة كثافة الشعر.', longDesc: 'توليفة من الزيوت الهندية العضوية المعروفة بخصائصها المغذية والمقوية للبصيلات. تستخدم كحمام زيت أسبوعي لتعزيز قوة الشعر وتقليل تساقطه الموسمي.', category: 'شعر', img: './images/مجموعه الزيوت الهندية.jpg', isFavorite: false },
+            
+
+            // --- BODY CARE (العناية بالجسم) ---
+            { id: 'b1', title: 'ديودرنت مزيل عرق', price: 60.00, desc: 'مزيل عرق طبيعي يحمي من الروائح لمدة 24 ساعة دون سد المسام.', longDesc: 'تركيبة خالية من الألومنيوم والبارابين. يوفر حماية فعالة وطويلة الأمد من التعرق والرائحة، مع الحفاظ على توازن البشرة الحساسة تحت الإبط.', category: 'جسم', img: './images/ديورنت مزيل عرق.jpg', isFavorite: false },
+            { id: 'b2', title: 'بدي باتر اوليمبيا تعطر وترطيب الجسم', price: 60.00, desc: 'زبدة جسم فاخرة برائحة أوليمبيا الساحرة وترطيب عميق يدوم طويلاً.', longDesc: 'زبدة غنية بقوام كريمي سريع الذوبان، ترطب البشرة الجافة وتتركها ناعمة ومشرقة مع عطر فواح ومثبت مستوحى من عطر أوليمبيا الشهير.', category: 'جسم', img: './images/body butter اوليمبيا.jpg', isFavorite: false },
+            { id: 'b3', title: 'بكينى بالم ترطيب وتعطير وتفتيح', price: 50.00, desc: 'بلسم متخصص للعناية بالمنطقة الحساسة، يرطب ويفتح لون البشرة.', longDesc: 'بلسم بيكيني بتركيبة لطيفة تحتوي على مواد مفتحة ومهدئة للبشرة. يساعد على تقليل التصبغات والاحمرار، مع توفير ترطيب فعال ورائحة خفيفة ومنعشة.', category: 'جسم', img: './images/بكيني بالم.jpg', isFavorite: false },
+            { id: 'b4', title: 'ليب بالم ترطيب وتوريد للشفاه', price: 30.00, desc: 'مرطب شفاه غني يمنح الشفاه لوناً وردياً طبيعياً وترطيباً مثالياً.', longDesc: 'بلسم شفاه بزبدة الكاكاو والزيوت الطبيعية. يعالج التشققات والجفاف، ويمنح الشفاه مظهراً ممتلئاً وصحياً مع توريد خفيف وطبيعي يدوم لساعات.', category: 'جسم', img: './images/ليب بالم ترطيب وتوريد شفاه.jpg', isFavorite: false },
+            { id: 'b5', title: 'سيروم وماسكرا الريدنسيل لتطويل وتكثيف الرموش والحواجب', price: 250.00, desc: 'سيروم ثنائي المفعول بتقنية الريدنسيل لرموش وحواجب أكثر كثافة وطولاً.', longDesc: 'تركيبة متطورة تحتوي على مركب Redensyl™ الذي يحفز خلايا البصيلات. يعزز نمو الرموش والحواجب ويمنع تساقطها، مما يمنحك نظرة أكثر جاذبية وعمقاً.', category: 'جسم', img: './images/سيرم الريدنسيل.jpg', isFavorite: false },
+
+            // --- SKIN CARE (العناية بالبشرة) ---
+            { id: 's1', title: 'صابونة الفحم وزيت شجرة الشاي', price: 100.00, desc: 'تنظيف عميق للمسام، مثالية للبشرة الدهنية والمعرضة لحب الشباب.', longDesc: 'صابونة طبيعية تحتوي على الفحم المنشط لامتصاص السموم والزيوت الزائدة، وزيت شجرة الشاي المعروف بخصائصه المضادة للبكتيريا. تقلل من ظهور البثور والرؤوس السوداء.', category: 'بشرة', img: './images/صابونة الفحم وزيت الشاي.jpg', isFavorite: false },
+            { id: 's2', title: 'سيروم الفا اربيوتين وفيتامين سي', price: 250.00, desc: 'مزيج فعال لتفتيح البشرة وتقليل التصبغات والبقع الداكنة.', longDesc: 'يجمع هذا السيروم بين قوة الألفا أربوتين (لتثبيط الميلانين) وفيتامين سي (لمقاومة الأكسدة). يمنح البشرة إشراقة ويساعد في توحيد اللون بشكل ملحوظ.', category: 'بشرة', img: './images/سيرم الالفا اربيوتين.jpg', isFavorite: false },
+            { id: 's3', title: 'سيروم الهيالورونيك والكولاجين', price: 250.00, desc: 'ترطيب عميق ومقاومة لعلامات التقدم في السن وتحسين مرونة الجلد.', longDesc: 'سيروم مكثف يحتوي على تركيز عالٍ من حمض الهيالورونيك لشد البشرة وتقليل الخطوط الدقيقة، والكولاجين البحري لدعم مرونة وامتلاء البشرة.', category: 'بشرة', img: './images/سيرم الهيالورنيك و الكولاجين.jpg', isFavorite: false },
+            { id: 's4', title: 'ماسك المارشيمالو تفتيح ونضارة', price: 60.00, desc: 'قناع سريع المفعول لإزالة التعب والبهتان ومنح البشرة نضارة فورية.', longDesc: 'قناع غني بمركبات المغنيسيوم التي تحفز تجديد الخلايا وتمد البشرة بالطاقة، مما يقلل من مظهر الإجهاد ويترك البشرة متألقة ومشرقة.', category: 'بشرة', img: './images/ماسك المارشميمالو.jpg', isFavorite: false },
+            { id: 's5', title: 'ماسك الساليسيليك اسيد والنياسيناميد', price: 60.00, desc: 'قناع علاجي للمسام الواسعة والحبوب، ينظم إفراز الدهون.', longDesc: 'تركيبة قوية من حمض الساليسيليك (BHA) لاختراق المسام وتنظيفها، والنياسيناميد لتقليل مظهرها وتحسين حاجز البشرة. مثالي للبشرة المختلطة والدهنية.', category: 'بشرة', img: './images/ماسك الساليسيليك اسيد.jpg', isFavorite: false },
+            { id: 's6', title: 'ماسك الديتوكس والشاي الاخضر والاعشاب البحرية', price: 60.00, desc: 'قناع ديتوكس طبيعي لتنقية البشرة من آثار التلوث والشوائب.', longDesc: 'قناع طيني غني بمضادات الأكسدة من الشاي الأخضر والمعادن من الأعشاب البحرية. ينظف البشرة بعمق، يهدئها، ويعيد لها توازنها الطبيعي.', category: 'بشرة', img: './images/ماسك الديوتكس.jpg', isFavorite: false },
+        ];
+
+
+        // ----------------------------------
+        // ✅ دوال المفضلة وسلة المشتريات وإدارة الـ DOM
+        // ----------------------------------
+
+        // ... (بقية الدوال تبقى كما هي) ...
+
+        // بيانات وهمية مؤقتة للمفضلة والسلة
+        let currentFavorites = []; 
+        let currentCart = [];
+        
+        // دالة تحديث عداد شريط التنقل (عامة)
+        function updateCounter(elementId, count) {
+            const countElement = document.getElementById(elementId);
+            if (countElement) {
+                countElement.textContent = count.toString();
+            }
+        }
+
+        // دالة تحديث كافة القوائم والعدادات (بما أننا لا نستخدم Firestore)
+        function updateUI() {
+            updateCounter('favorites-count', currentFavorites.length);
+            renderFavoritesList(currentFavorites);
+            
+            updateCounter('cart-count', currentCart.length);
+            renderCartList(currentCart);
+
+            // تحديث حالة أيقونات المفضلة على بطاقات المنتجات
+            productsData.forEach(product => {
+                const isFav = currentFavorites.some(fav => fav.id === product.id);
+                const button = document.querySelector(`.product-card[data-product-id="${product.id}"] .add-to-favorite i`);
+                if (button) {
+                    if (isFav) {
+                        button.classList.replace('far', 'fas');
+                        button.closest('.add-to-favorite').classList.add('text-red-500');
+                    } else {
+                        button.classList.replace('fas', 'far');
+                        button.closest('.add-to-favorite').classList.remove('text-red-500');
+                    }
+                }
+            });
+        }
+
+        // دالة وهمية لإضافة منتج إلى سلة المشتريات (تحديث الذاكرة فقط)
+        function addToCart(productId) {
+            // الآن نستخدم مصفوفة المنتجات الثابتة بدلاً من استخلاصها من DOM
+            const product = productsData.find(p => p.id === productId);
+
+            if (!product) {
+                console.error('Product not found for ID:', productId);
+                return;
+            }
+
+            // التحقق مما إذا كان المنتج موجوداً بالفعل في السلة
+            const existingItemIndex = currentCart.findIndex(item => item.id === productId);
+
+            if (existingItemIndex !== -1) {
+                // زيادة الكمية إذا كان موجوداً
+                currentCart[existingItemIndex].quantity += 1;
+            } else {
+                // إضافة المنتج الجديد
+                currentCart.push({ 
+                    id: productId, 
+                    title: product.title, 
+                    price: product.price, 
+                    imageUrl: product.img, 
+                    quantity: 1 
+                });
+            }
+
+            console.log(`Product ${productId} added/updated in cart.`);
+            updateUI();
+            showCartModal(); // فتح السلة بعد الإضافة
+        }
+
+        // دالة لتصيير (Rendering) قائمة سلة المشتريات في Modal
+        function renderCartList(cart) {
+            const listContainer = document.getElementById('cart-items-list');
+            const totalElement = document.getElementById('cart-total');
+            const emptyMessage = document.getElementById('empty-cart');
+            listContainer.innerHTML = ''; // مسح المحتوى القديم
+
+            let total = 0;
+
+            if (cart.length === 0) {
+                emptyMessage.classList.remove('hidden');
+                listContainer.appendChild(emptyMessage);
+                totalElement.textContent = '0.00 ج.م';
+                return;
+            }
+
+            emptyMessage.classList.add('hidden');
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center space-x-4 space-x-reverse bg-gray-50 p-4 rounded-lg shadow-sm border-r-4 border-accent-color';
+                itemDiv.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.title}" class="w-16 h-16 object-cover rounded-md flex-shrink-0">
+                    <div class="flex-grow">
+                        <p class="font-semibold text-text-dark text-lg">${item.title}</p>
+                        <p class="text-gray-600 text-sm">${item.price.toFixed(2)} ج.م × ${item.quantity}</p>
+                    </div>
+                    <div class="flex flex-col items-end space-y-1 flex-shrink-0">
+                        <p class="text-lg font-bold text-primary-color">${itemTotal.toFixed(2)} ج.م</p>
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <button data-id="${item.id}" data-action="decrease" class="cart-quantity-btn text-sm bg-gray-200 text-gray-700 w-6 h-6 rounded-full hover:bg-gray-300 transition-colors">-</button>
+                            <span class="text-sm font-medium">${item.quantity}</span>
+                            <button data-id="${item.id}" data-action="increase" class="cart-quantity-btn text-sm bg-gray-200 text-gray-700 w-6 h-6 rounded-full hover:bg-gray-300 transition-colors">+</button>
+                            <button data-id="${item.id}" data-action="remove" class="cart-quantity-btn text-red-400 hover:text-red-600 transition-colors text-lg ml-2">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+            
+            totalElement.textContent = `${total.toFixed(2)} ج.م`;
+            
+            // إضافة مستمعي أحداث لأزرار التحكم بالكمية
+            listContainer.querySelectorAll('.cart-quantity-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.currentTarget.dataset.id;
+                    const action = e.currentTarget.dataset.action;
+                    updateCartItemQuantity(productId, action); 
+                });
+            });
+        }
+        
+        // دالة تحديث كمية منتج في السلة (أو إزالته) - تحديث الذاكرة فقط
+        function updateCartItemQuantity(productId, action) {
+            const itemIndex = currentCart.findIndex(item => item.id === productId);
+
+            if (itemIndex === -1) return;
+
+            if (action === 'increase') {
+                currentCart[itemIndex].quantity += 1;
+            } else if (action === 'decrease') {
+                currentCart[itemIndex].quantity -= 1;
+            } else if (action === 'remove') {
+                currentCart[itemIndex].quantity = 0; // سيؤدي هذا إلى إزالته في الخطوة التالية
+            }
+
+            // فلترة المنتجات لإزالة التي كميتها صفر
+            currentCart = currentCart.filter(item => item.quantity > 0);
+
+            console.log(`Cart item ${productId} updated/removed.`);
+            updateUI(); // تحديث الواجهة بعد التعديل
+        }
+
+
+        // دالة إضافة/إزالة المنتج من المفضلة - تحديث الذاكرة فقط
+        function toggleFavorite(productId) {
+            // Find the product in the local data (optional, but good practice)
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const favIndex = currentFavorites.findIndex(item => item.id === productId);
+            const isCurrentlyFavorite = favIndex !== -1;
+
+            if (isCurrentlyFavorite) {
+                // إزالة المنتج
+                currentFavorites.splice(favIndex, 1);
+            } else {
+                // إضافة المنتج (نستخدم بيانات المصفوفة الثابتة)
+                currentFavorites.push({ 
+                    id: product.id, 
+                    title: product.title, 
+                    price: product.price.toFixed(2) + 'ج.م', 
+                    imageUrl: product.img 
+                });
+            }
+
+            console.log(`Product ${productId} Toggled. Is Favorite: ${!isCurrentlyFavorite}`);
+            updateUI(); // تحديث الواجهة لتنعكس التغييرات على البطاقة والعداد
+        }
+
+
+        // دالة لتصيير (Rendering) قائمة المفضلة في Modal
+        function renderFavoritesList(favorites) {
+            const listContainer = document.getElementById('favorites-list');
+            const emptyMessage = document.getElementById('empty-favorites');
+            listContainer.innerHTML = ''; // مسح المحتوى القديم
+
+            if (favorites.length === 0) {
+                emptyMessage.classList.remove('hidden');
+                listContainer.appendChild(emptyMessage);
+                return;
+            }
+
+            emptyMessage.classList.add('hidden');
+
+            favorites.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center space-x-4 space-x-reverse bg-gray-50 p-3 rounded-lg shadow-sm border-r-4 border-red-500';
+                itemDiv.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.title}" class="w-16 h-16 object-cover rounded-md">
+                    <div class="flex-grow">
+                        <p class="font-semibold text-text-dark">${item.title}</p>
+                        <p class="text-accent-color font-bold">${item.price}</p>
+                    </div>
+                    <button data-id="${item.id}" aria-label="إزالة من المفضلة" class="remove-favorite text-red-400 hover:text-red-600 transition-colors text-xl">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+            
+            // إضافة مستمعي أحداث لحذف المنتجات من داخل الـ Modal
+            listContainer.querySelectorAll('.remove-favorite').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.currentTarget.dataset.id;
+                    toggleFavorite(productId); // الإزالة تتم داخل toggleFavorite
+                });
+            });
+        }
+        
+        // ----------------------------------
+        // ✅ دالة تصيير قسم المنتجات (الـ 20 منتج)
+        // ----------------------------------
+        function renderProductsSection() {
+            const appContent = document.getElementById('app-content');
+            appContent.innerHTML = `
+                <section id="products-section" class="container mx-auto px-4 py-12 animated-element" data-delay="0s">
+                    <h2 class="text-4xl font-bold text-center text-primary-color mb-10 border-b-4 border-secondary-color inline-block mx-auto pb-2">
+                        منتجاتنا المميزة
+                    </h2>
+                    
+                    <div class="flex justify-center space-x-4 space-x-reverse mb-8">
+                        <button class="filter-btn text-lg px-4 py-2 rounded-full bg-primary-color text-white hover:bg-accent-color transition duration-300">الكل</button>
+                        <button class="filter-btn text-lg px-4 py-2 rounded-full bg-gray-200 text-text-dark hover:bg-gray-300 transition duration-300" data-filter="شعر">العناية بالشعر</button>
+                        <button class="filter-btn text-lg px-4 py-2 rounded-full bg-gray-200 text-text-dark hover:bg-gray-300 transition duration-300" data-filter="بشرة">العناية بالبشرة</button>
+                        <button class="filter-btn text-lg px-4 py-2 rounded-full bg-gray-200 text-text-dark hover:bg-gray-300 transition duration-300" data-filter="جسم">العناية بالجسم</button>
+                    </div>
+
+                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                        ${productsData.map(product => `
+                            <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 p-4 flex flex-col justify-between animated-element" data-product-id="${product.id}" data-category="${product.category}" data-delay="0.1s">
+                                <div class="relative mb-4">
+                                    <img src="${product.img}" alt="${product.title}" class="w-full h-48 object-cover rounded-lg">
+                                    <button data-product-id="${product.id}" aria-label="أضف للمفضلة" class="add-to-favorite absolute top-2 right-2 text-2xl text-gray-300 hover:text-red-500 transition-colors duration-300 p-2 bg-white rounded-full shadow-md z-10">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-col flex-grow product-info-area">
+                                    <h3 class="text-xl font-bold text-text-dark mb-1">${product.title}</h3>
+                                    <p class="text-sm text-gray-500 mb-3 flex-grow">${product.desc}</p>
+                                    
+                                    <div class="flex justify-between items-center mt-auto mb-4">
+                                        <span class="text-2xl font-extrabold text-accent-color">${product.price.toFixed(2)} ج.م</span>
+                                        <span class="text-xs text-gray-400 border border-gray-300 rounded-full px-2 py-0.5">${product.category}</span>
+                                    </div>
+                                    
+                                    <button data-product-id="${product.id}" class="add-to-cart-btn w-full bg-primary-color text-white text-lg font-semibold py-2 rounded-lg hover:bg-secondary-color transition duration-300 transform hover:scale-[1.02] z-10">
+                                        <i class="fas fa-cart-plus ml-2"></i> أضف للسلة
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+            // إعادة تطبيق مستمعي الأحداث بعد تصيير الـ HTML
+            attachProductEventListeners();
+        }
+
+        // ----------------------------------
+        // ✅ دوال إدارة الـ Modals
+        // ----------------------------------
+        
+        // دالة فتح Modal عامة
+        function showModal(modalId, contentId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.getElementById(modalId).classList.add('flex');
+            document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+            // تأثير الظهور
+            setTimeout(() => {
+                document.getElementById(contentId).classList.remove('scale-95', 'opacity-0');
+                document.getElementById(contentId).classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // دالة إغلاق Modal عامة
+        function hideModal(modalId, contentId) {
+            // تأثير الإخفاء
+            document.getElementById(contentId).classList.remove('scale-100', 'opacity-100');
+            document.getElementById(contentId).classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                document.getElementById(modalId).classList.remove('flex');
+                document.getElementById(modalId).classList.add('hidden');
+                document.body.style.overflow = ''; // إعادة التمرير
+            }, 300); // يتوافق مع مدة الانتقال في CSS
+        }
+        
+        // دوال سلة المشتريات
+        window.showCartModal = () => showModal('cart-modal', 'cart-content');
+        window.hideCartModal = () => hideModal('cart-modal', 'cart-content');
+
+        // دوال المفضلة
+        window.showFavoritesModal = () => showModal('favorites-modal', 'favorites-content');
+        window.hideFavoritesModal = () => hideModal('favorites-modal', 'favorites-content');
+        
+        // دوال تسجيل الدخول
+        window.showLoginModal = () => showModal('login-modal', 'login-content');
+        window.hideLoginModal = () => hideModal('login-modal', 'login-content');
+
+        // دوال إنشاء الحساب
+        window.showRegisterModal = () => showModal('register-modal', 'register-content');
+        window.hideRegisterModal = () => hideModal('register-modal', 'register-content');
+
+        // دوال تفاصيل المنتج
+        window.showProductDetailModal = (productId) => {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const modalContent = document.getElementById('product-detail-content');
+            modalContent.innerHTML = `
+                <div class="flex justify-between items-start border-b pb-3 mb-4">
+                    <h3 class="text-3xl font-bold text-primary-color">${product.title}</h3>
+                    <button aria-label="إغلاق" onclick="hideProductDetailModal()" class="text-gray-500 hover:text-red-500 text-3xl transition-colors duration-300">&times;</button>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="md:col-span-1">
+                        <img src="${product.img}" alt="${product.title}" class="w-full max-h-96 object-contain rounded-lg shadow-lg border border-gray-200">
+                    </div>
+                    
+                    <div class="md:col-span-1 flex flex-col justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-2 border-b pb-2">
+                                <span class="font-semibold text-text-dark">الفئة:</span> ${product.category}
+                            </p>
+                            
+                            <p class="text-text-dark text-lg mb-4 leading-relaxed">${product.longDesc}</p>
+                            
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 text-base mb-6 bg-background-light p-4 rounded-lg border-l-4 border-accent-color">
+                                <li>خالٍ من البارابين والسلفات.</li>
+                                <li>مكونات طبيعية وعضوية 100%.</li>
+                                <li>مناسب لـ ${product.category === 'شعر' ? 'جميع أنواع الشعر' : 'البشرة الحساسة'}.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mt-auto pt-4 border-t border-dashed flex justify-between items-center flex-wrap gap-4">
+                            <span class="text-4xl font-extrabold text-accent-color">${product.price.toFixed(2)} ر.س</span>
+                            
+                            <button data-product-id="${product.id}" class="add-to-cart-btn-modal flex items-center bg-primary-color text-white text-xl font-bold py-3 px-6 rounded-lg hover:bg-secondary-color transition duration-300 transform hover:-translate-y-0.5 shadow-lg">
+                                <i class="fas fa-cart-plus ml-3"></i> أضف للسلة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // إضافة مستمع الحدث لزر الإضافة للسلة داخل الـ Modal
+            modalContent.querySelector('.add-to-cart-btn-modal').addEventListener('click', (e) => {
+                const id = e.currentTarget.dataset.productId;
+                addToCart(id);
+                // اختياري: إغلاق التفاصيل بعد الإضافة
+                hideProductDetailModal();
+            });
+
+            showModal('product-detail-modal', 'product-detail-content');
+        };
+
+        window.hideProductDetailModal = () => hideModal('product-detail-modal', 'product-detail-content');
+
+
+        // ----------------------------------
+        // ✅ مستمعي الأحداث العامة
+        // ----------------------------------
+        
+        // دالة تجميع مستمعي الأحداث للمنتجات والفلاتر
+        function attachProductEventListeners() {
+            // 1. مستمعي حدث إضافة للمفضلة
+            document.querySelectorAll('.add-to-favorite').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation(); // منع انتقال النقر إلى البطاقة (تفاصيل المنتج)
+                    const productId = e.currentTarget.dataset.productId;
+                    toggleFavorite(productId);
+                });
+            });
+
+            // 2. مستمعي حدث إضافة إلى السلة
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation(); // منع انتقال النقر إلى البطاقة (تفاصيل المنتج)
+                    const productId = e.currentTarget.dataset.productId;
+                    addToCart(productId);
+                });
+            });
+
+            // 3. مستمعي أحداث الفلاتر
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const filter = e.currentTarget.dataset.filter;
+                    filterProducts(filter);
+
+                    // تحديث مظهر زر الفلتر النشط
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-primary-color', 'text-white');
+                        btn.classList.add('bg-gray-200', 'text-text-dark');
+                    });
+                    e.currentTarget.classList.add('bg-primary-color', 'text-white');
+                    e.currentTarget.classList.remove('bg-gray-200', 'text-text-dark');
+                });
+            });
+            
+            // 4. مستمعي حدث النقر على بطاقة المنتج لفتح التفاصيل
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // نتأكد أن النقر لم يكن على زر داخل البطاقة
+                    if (!e.target.closest('.add-to-cart-btn') && !e.target.closest('.add-to-favorite')) {
+                        const productId = card.dataset.productId;
+                        showProductDetailModal(productId);
+                    }
+                });
+            });
+        }
+        
+        // دالة الفلترة
+        function filterProducts(filter) {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                const category = card.dataset.category;
+                if (!filter || filter === 'الكل' || category === filter) {
+                    card.classList.remove('hidden');
+                    // إعادة تشغيل الأنيمايشن للعناصر التي تظهر حديثاً
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    animateElement(card); 
+
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // دالة الأنيمايشن (مستقلة الآن)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateElement(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+
+        function animateElement(el) {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. تصيير قسم المنتجات أولاً
+            renderProductsSection();
+            
+            // 2. مستمع حدث زر قائمة الجوال
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 3. تطبيق مراقب Intersection Observer على كافة العناصر المتحركة
+            document.querySelectorAll('.animated-element').forEach(el => {
+                // إضافة الأنماط الأولية للإخفاء لبدء عمل الأنيمايشن
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = `opacity 0.6s ease-out, transform 0.6s ease-out ${el.dataset.delay || '0s'}`;
+
+                observer.observe(el);
+            });
+
+            // 4. تحديث الواجهة عند التحميل الأولي
+            updateUI();
+        });
+
+
+        // ----------------------------------
+// ✅ دالة التوجيه إلى واتساب لطلب المنتجات
+// ----------------------------------
+function redirectToWhatsapp() {
+    // يجب بناء رسالة الطلب تلقائيًا بناءً على محتوى السلة (إذا كانت السلة غير فارغة)
+    const whatsappNumber = '201098575720';
+    let message = 'أهلاً، أرغب في إتمام طلبي، وهذه قائمة بالمنتجات: \n\n';
+    let total = 0;
+
+    if (currentCart.length > 0) {
+        currentCart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            message += `- ${item.title} (الكمية: ${item.quantity}) - الإجمالي: ${itemTotal.toFixed(2)} ج.م\n`;
+            total += itemTotal;
+        });
+        message += `\n*الإجمالي الكلي للطلب:* ${total.toFixed(2)} ج.م`;
+    } else {
+        // رسالة افتراضية إذا كانت السلة فارغة
+        message = 'أهلاً، أرغب في الاستفسار عن منتجاتكم أو تقديم طلب.';
+    }
+
+    // تشفير الرسالة وتكوين رابط الواتساب
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+    
+    // فتح الرابط في نافذة/علامة تبويب جديدة
+    window.open(whatsappLink, '_blank');
+    
+    // إخفاء سلة المشتريات بعد التوجيه
+    hideCartModal(); 
+}
+
+// ... (بقية الدوال تبقى كما هي) ...
+
+    </script>
+
+</body>
+
+</html>
