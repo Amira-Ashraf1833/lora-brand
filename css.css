@@ -253,7 +253,7 @@
 
             .social-icons-desktop {
                 order: 1;
-                margin-bottom: 10px;
+                margin-bottom: 20px;
             }
         }
 
@@ -490,4 +490,5 @@
             color: var(--text-dark);
             background-color: #F0E6D0;
             margin-top: 40px;
+
         }
